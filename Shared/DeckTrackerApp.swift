@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct DeckTrackerApp: App {
+    @StateObject private var deckStore = DeckStore()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DeckList(deckStore: deckStore)
         }
     }
 }
