@@ -20,13 +20,20 @@ struct DeckList: View {
                 }
             }
             .navigationTitle("Decks")
-            .navigationBarItems(leading: EditButton(), trailing: Button(action: {
-                self.showSheetView.toggle()
-            })
-            {
-                Image(systemName: "plus.circle")
-                    .imageScale(.large)
-            })
+            .toolbar {
+                #if os(iOS)
+                EditButton()
+                #endif
+                Button(action: {
+                    showSheetView.toggle()
+                })
+                {
+                    HStack {
+                        Image(systemName: "plus")
+                        Text("Add")
+                    }
+                }
+            }
             .sheet (isPresented: $showSheetView)
                {
                 NavigationView {
@@ -79,6 +86,10 @@ struct DeckCell: View {
     var body: some View {
         NavigationLink(destination: DeckDetailView(deck: deck)) {
             HStack {
+                Image("WrennAndSix")
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(10)
                 VStack{
                     HStack {
                         Text(deck.name)
@@ -86,9 +97,9 @@ struct DeckCell: View {
                         Spacer()
                     }
                     HStack {
-                        Text("Wins: \(deck.wins)")
-                        Text("Losses: \(deck.losses)")
-                        Text("Draws: \(deck.draws)")
+                        Text("W: \(deck.wins)")
+                        Text("L: \(deck.losses)")
+                        Text("D: \(deck.draws)")
                         Spacer()
                     }
                     .font(.subheadline)
