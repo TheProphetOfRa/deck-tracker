@@ -20,7 +20,7 @@ struct DeckList: View {
                 }
             }
             .navigationTitle("Decks")
-            .navigationBarItems(trailing: Button(action: {
+            .navigationBarItems(leading: EditButton(), trailing: Button(action: {
                 self.showSheetView.toggle()
             })
             {
@@ -105,6 +105,10 @@ struct DeckCell: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        DeckList(deckStore: testStore)
+        Group {
+            DeckList(deckStore: testStore)
+            DeckList(deckStore: testStore)
+                .preferredColorScheme(.dark)
+        }
     }
 }
