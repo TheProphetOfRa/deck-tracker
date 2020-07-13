@@ -7,14 +7,26 @@
 
 import Foundation
 
-struct Card: Identifiable {
+class Card: Identifiable, ObservableObject {
     public var id : UUID = UUID()
-    var name : String
-    var count : Int
+    @Published var name : String
+    @Published var count : Int
     
     init(name : String, count : Int = 1) {
         self.name = name
         self.count = count
+    }
+    
+    func tryIncreaseCount() {
+        if count < 4 {
+            self.count += 1
+        }
+    }
+    
+    func tryDecreaseCount() {
+        if count > 1 {
+            self.count -= 1
+        }
     }
 }
 
