@@ -23,6 +23,8 @@
 		5F5172DE24B8E400002BEE5A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F5172B224B8E400002BEE5A /* Assets.xcassets */; };
 		5F56FB8324BCF4CF00A0E087 /* AddDeckSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F56FB8224BCF4CE00A0E087 /* AddDeckSheet.swift */; };
 		5F56FB8424BCF4CF00A0E087 /* AddDeckSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F56FB8224BCF4CE00A0E087 /* AddDeckSheet.swift */; };
+		5F56FB8624BD095800A0E087 /* DeckListWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F56FB8524BD095800A0E087 /* DeckListWidget.swift */; };
+		5F56FB8724BD095800A0E087 /* DeckListWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F56FB8524BD095800A0E087 /* DeckListWidget.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +63,7 @@
 		5F5172D624B8E400002BEE5A /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		5F5172D824B8E400002BEE5A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5F56FB8224BCF4CE00A0E087 /* AddDeckSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeckSheet.swift; sourceTree = "<group>"; };
+		5F56FB8524BD095800A0E087 /* DeckListWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckListWidget.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +120,7 @@
 				5F5172B124B8E3FF002BEE5A /* DeckList.swift */,
 				5F33A2A724B9D40800B742C9 /* DeckStore.swift */,
 				5F5172B024B8E3FF002BEE5A /* DeckTrackerApp.swift */,
+				5F56FB8524BD095800A0E087 /* DeckListWidget.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -326,6 +330,7 @@
 			files = (
 				5F33A2AE24B9DEED00B742C9 /* DeckDetailView.swift in Sources */,
 				5F33A2AB24B9D46700B742C9 /* Deck.swift in Sources */,
+				5F56FB8624BD095800A0E087 /* DeckListWidget.swift in Sources */,
 				5F56FB8324BCF4CF00A0E087 /* AddDeckSheet.swift in Sources */,
 				5F33A2A824B9D40800B742C9 /* DeckStore.swift in Sources */,
 				5F5172DB24B8E400002BEE5A /* DeckList.swift in Sources */,
@@ -339,6 +344,7 @@
 			files = (
 				5F33A2AF24B9DEED00B742C9 /* DeckDetailView.swift in Sources */,
 				5F33A2AC24B9D46700B742C9 /* Deck.swift in Sources */,
+				5F56FB8724BD095800A0E087 /* DeckListWidget.swift in Sources */,
 				5F56FB8424BCF4CF00A0E087 /* AddDeckSheet.swift in Sources */,
 				5F33A2A924B9D40800B742C9 /* DeckStore.swift in Sources */,
 				5F5172DC24B8E400002BEE5A /* DeckList.swift in Sources */,

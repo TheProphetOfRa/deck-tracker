@@ -6,39 +6,11 @@
 //
 
 import SwiftUI
-struct CardCell : View {
-    @ObservedObject var card : Card
-    
-    var body : some View {
-        HStack {
-            Button(action: {
-                card.tryDecreaseCount()
-            })
-            {
-                Image(systemName: "minus")
-                    .foregroundColor(.accentColor)
-            }
-            .buttonStyle(BorderlessButtonStyle())
-            Text("\(card.count)x")
-            Button(action: {
-                card.tryIncreaseCount()
-            })
-            {
-                Image(systemName: "plus")
-                    .foregroundColor(.accentColor)
-            }
-            .buttonStyle(BorderlessButtonStyle())
-            Spacer()
-            TextField("New Card", text: $card.name)
-        }
-    }
-}
+
 struct AddDeckSheet : View {
     @Binding var isPresented : Bool
-    @State private var newDeckName : String = String()
     var deckStore : DeckStore
-    @State var mainboard : [Card] = []
-    @State var sideboard : [Card] = []
+    @ObservedObject var deck : Deck = Deck()
     
     var body : some View {
         VStack {
@@ -54,51 +26,10 @@ struct AddDeckSheet : View {
                 Text("Deck Name:")
                     .font(.title2)
                 Spacer()
-                TextField("New Deck", text: $newDeckName)
+                TextField("New Deck", text: $deck.name)
                     .font(.title2)
             }
-            HStack {
-                VStack {
-                    Text("Mainboard")
-                        .foregroundColor(.secondary)
-                    List {
-                        ForEach (mainboard) { card in
-                            CardCell(card: card)
-                        }
-                        HStack {
-                            Spacer()
-                            Button(action: {
-                                self.mainboard.append(Card(name: ""))
-                            })
-                            {
-                                Label("Add", systemImage: "plus")
-                                    .foregroundColor(.accentColor)
-                            }
-                            Spacer()
-                        }
-                    }
-                }
-                VStack {
-                    Text("Sideboard")
-                        .foregroundColor(.secondary)
-                    List {
-                        ForEach (sideboard) { card in
-                            CardCell(card: card)
-                        }
-                        HStack {
-                            Spacer()
-                            Button(action: {
-                                self.sideboard.append(Card(name: "New Card"))
-                            })
-                            {
-                                Label("Add", systemImage: "plus")
-                                    .foregroundColor(.accentColor)
-                            }
-                            Spacer()
-                        }
-                    }
-                }
-            }
+            DeckListWidget(deck: deck)
             Spacer()
             HStack {
                 Spacer()
@@ -133,7 +64,7 @@ struct AddDeckSheet : View {
     
     func createDeck() {
         withAnimation {
-            deckStore.decks.append(Deck(name: newDeckName, list: mainboard, sideboard: sideboard))
+            deckStore.decks.append(deck)
         }
     }
 }

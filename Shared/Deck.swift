@@ -32,7 +32,7 @@ class Card: Identifiable, ObservableObject {
 
 public class Deck : Identifiable, ObservableObject {
     public var id : UUID = UUID()
-    @Published var name : String
+    @Published var name : String = ""
     @Published var list : [Card] = []
     var listCount : Int = 0
     @Published var sideboard : [Card] = []
@@ -42,16 +42,13 @@ public class Deck : Identifiable, ObservableObject {
     @Published var draws : Int = 0
     @Published var winPct : Float = 0.0
     
-    init(name : String, list: [Card] = [], sideboard: [Card] = []) {
+    init(name: String = "", list: [Card] = []) {
         self.name = name
         self.list = list
-        self.sideboard = sideboard
-        for card in list {
-            listCount += card.count
-        }
-        for card in sideboard {
-            sideboardCount += card.count
-        }
+    }
+    
+    func setName(name: String) {
+        self.name = name
     }
     
     func addWin() {
@@ -121,8 +118,6 @@ let testData = [
         Card(name: "Wooded Foothills", count: 2),
         Card(name: "Nurturing Peatland", count: 2),
         Card(name: "Raging Ravine", count: 2),
-    ], sideboard: [
-        Card(name: "Alpine Moon", count: 2)
     ]),
     Deck(name: "UW Control")
 ]

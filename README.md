@@ -14,5 +14,3 @@ Core Data Support
 Gatherer Integration for Card Validation/Deck Artwork
 
 Re-do Add Deck Sheet for more iOS styling
-
-Factorise DeckList Widgets for use across detail view and add deck sheet
