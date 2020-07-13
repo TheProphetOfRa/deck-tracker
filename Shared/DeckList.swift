@@ -57,53 +57,101 @@ struct AddDeckSheet : View {
     @Binding var isPresented : Bool
     @State private var newDeckName : String = String()
     var deckStore : DeckStore
-    var mainboard : [Card] = []
-    var sideboard : [Card] = []
+    @State var mainboard : [Card] = []
+    @State var sideboard : [Card] = []
     
     var body : some View {
-        NavigationView {
-            VStack {
-                HStack {
-                    Text("Deck Name:")
-                    Spacer()
-                    TextField("New Deck", text: $newDeckName)
-                }
-                HStack {
-                    VStack {
-                        Text("Mainboard")
-                            .foregroundColor(.secondary)
-                        List {
-                            ForEach (mainboard) { card in
-                                
+        VStack {
+            HStack{
+                Spacer()
+                Text("Add Deck")
+                    .font(.title)
+                Spacer()
+            }
+            Divider()
+            Spacer()
+            HStack {
+                Text("Deck Name:")
+                    .font(.title2)
+                Spacer()
+                TextField("New Deck", text: $newDeckName)
+                    .font(.title2)
+            }
+            HStack {
+                VStack {
+                    Text("Mainboard")
+                        .foregroundColor(.secondary)
+                    List {
+                        ForEach (mainboard) { card in
+                            Text("\(card.count, specifier: "%d")x \(card.name)")
+                        }
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                self.mainboard.append(Card(name: "New Card"))
+                            })
+                            {
+                                Label("Add", systemImage: "plus")
+                                    .foregroundColor(.accentColor)
                             }
+                            Spacer()
                         }
                     }
-                    VStack {
-                        Text("Sideboard")
-                            .foregroundColor(.secondary)
-                        List {
-                            ForEach (sideboard) { card in
+                }
+                VStack {
+                    Text("Sideboard")
+                        .foregroundColor(.secondary)
+                    List {
+                        ForEach (sideboard) { card in
+                            HStack {
                                 
+                                Text("\(card.count, specifier: "%d")x \(card.name)")
                             }
+                        }
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                self.sideboard.append(Card(name: "New Card"))
+                            })
+                            {
+                                Label("Add", systemImage: "plus")
+                                    .foregroundColor(.accentColor)
+                            }
+                            Spacer()
                         }
                     }
                 }
             }
-            .navigationBarTitle(Text("Add Deck"), displayMode: .inline)
-            .toolbar {
+            Spacer()
+            HStack {
+                Spacer()
                 Button(action: {
                     self.isPresented = false
-                }) {
-                    Image(systemName: "xmark").imageScale(.large)
-                }
-                Button(action: {
                     createDeck()
-                    self.isPresented = false
-                }) {
-                    Image(systemName: "plus.circle").imageScale(.large)
+                })
+                {
+                    Label("Create", systemImage: "plus")
+                        .foregroundColor(.white)
+                        .padding()
                 }
+                .background(Color.green)
+                .clipShape(Capsule())
+                Spacer()
+                Button(action: {
+                    self.isPresented = false
+                })
+                {
+                    Label("Cancel", systemImage: "xmark")
+                        .foregroundColor(.white)
+                        .padding()
+                        
+                }
+                .background(Color.red)
+                .clipShape(Capsule())
+                Spacer()
             }
-       }
+        }
+        .padding(.all, 10)
     }
     
     func createDeck() {
