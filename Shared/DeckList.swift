@@ -10,7 +10,6 @@ import SwiftUI
 struct DeckList: View {
     @ObservedObject var deckStore : DeckStore
     @State private var showSheetView : Bool = false
-    @State private var newDeckName : String = String()
     
     var body: some View {
         NavigationView {
@@ -18,6 +17,8 @@ struct DeckList: View {
                 ForEach(deckStore.decks) { deck in
                     DeckCell(deck: deck)
                 }
+                .onMove(perform: moveDeck)
+                .onDelete(perform: deleteDeck)
             }
             .navigationTitle("Decks")
             .toolbar {
@@ -25,45 +26,17 @@ struct DeckList: View {
                 EditButton()
                 #endif
                 Button(action: {
-                    showSheetView.toggle()
-                })
-                {
+                    self.showSheetView.toggle()
+                }) {
                     HStack {
                         Image(systemName: "plus")
                         Text("Add")
                     }
                 }
             }
-            .sheet (isPresented: $showSheetView)
-               {
-                NavigationView {
-                    HStack {
-                        Text("Deck Name:")
-                        Spacer()
-                        TextField("New Deck", text: $newDeckName)
-                    }
-                    .navigationBarTitle(Text("Add Deck"), displayMode: .inline)
-                    .navigationBarItems(
-                        leading: Button(action: {
-                            showSheetView = false
-                        }) {
-                            Image(systemName: "xmark").imageScale(.large)
-                        },
-                        trailing: Button(action: {
-                            createDeck()
-                            showSheetView = false;
-                        }) {
-                            Image(systemName: "plus.circle").imageScale(.large)
-                        })
-               }
-            }
-        }
-    }
-    
-    func createDeck() {
-        withAnimation {
-            deckStore.decks.append(Deck(name: newDeckName))
-            newDeckName = ""
+            .sheet (isPresented: $showSheetView, content: {
+                AddDeckSheet(isPresented: $showSheetView, deckStore: deckStore)
+            })
         }
     }
     
@@ -76,6 +49,66 @@ struct DeckList: View {
     func deleteDeck(offsets: IndexSet) {
         withAnimation {
             deckStore.decks.remove(atOffsets: offsets)
+        }
+    }
+}
+
+struct AddDeckSheet : View {
+    @Binding var isPresented : Bool
+    @State private var newDeckName : String = String()
+    var deckStore : DeckStore
+    var mainboard : [Card] = []
+    var sideboard : [Card] = []
+    
+    var body : some View {
+        NavigationView {
+            VStack {
+                HStack {
+                    Text("Deck Name:")
+                    Spacer()
+                    TextField("New Deck", text: $newDeckName)
+                }
+                HStack {
+                    VStack {
+                        Text("Mainboard")
+                            .foregroundColor(.secondary)
+                        List {
+                            ForEach (mainboard) { card in
+                                
+                            }
+                        }
+                    }
+                    VStack {
+                        Text("Sideboard")
+                            .foregroundColor(.secondary)
+                        List {
+                            ForEach (sideboard) { card in
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            .navigationBarTitle(Text("Add Deck"), displayMode: .inline)
+            .toolbar {
+                Button(action: {
+                    self.isPresented = false
+                }) {
+                    Image(systemName: "xmark").imageScale(.large)
+                }
+                Button(action: {
+                    createDeck()
+                    self.isPresented = false
+                }) {
+                    Image(systemName: "plus.circle").imageScale(.large)
+                }
+            }
+       }
+    }
+    
+    func createDeck() {
+        withAnimation {
+            deckStore.decks.append(Deck(name: newDeckName, list: mainboard, sideboard: sideboard))
         }
     }
 }
@@ -109,7 +142,7 @@ struct DeckCell: View {
                 Text("\(deck.winPct, specifier: "%.1f")%")
                 Spacer()
             }
-            .padding(.trailing, /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+            .padding(.trailing, 10)
         }
     }
 }
